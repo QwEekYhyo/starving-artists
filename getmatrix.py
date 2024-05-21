@@ -15,9 +15,12 @@ def get_matrix(image_path):
     line = []
     linecount = 0
 
+    is_alpha = None
     for i in pixels:
         k = (i[0], i[1], i[2])
-        if (i[3] == 0):
+        if is_alpha is None:
+            is_alpha = len(i) == 4
+        if is_alpha and i[3] == 0:
             line.append("void")
         else:
             line.append(k)
