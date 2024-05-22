@@ -28,10 +28,13 @@ close_button_color = (109, 42, 40)
 
 
 def rgb_to_hex(rgb):
+    # Store hex values of red, green and blue
     temp = ["", "", ""]
     for i in range(3):
         temp[i] = hex(rgb[i])[2:]
 
+    # Concatenate the values and ensure they are of length two to match the
+    # format : ff00ff
     result = ""
     for v in temp:
         if len(v) < 2:
@@ -42,22 +45,25 @@ def rgb_to_hex(rgb):
     return result
 
 
+# Take a screenshot and check that the selected color matches the given one
 def is_right_color_selected(color):
     screenshot = ImageGrab.grab()
     return screenshot.getpixel(color_button) == color
 
 
+# Take a screenshot and check that the close button is not visible through its color
 def is_color_menu_closed():
     screenshot = ImageGrab.grab()
-    is_closed = screenshot.getpixel(close_color) != close_button_color
-    return is_closed
+    return screenshot.getpixel(close_color) != close_button_color
 
-
-def click_to(coordinates): 
+# Move the mouse to the given coordinates with a randomness of a few pixels
+def move_to(coordinates): 
     mousemovements.move(coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2))
     time.sleep(0.1)
 
 
+# Move mouse and click on the given coordinates
+#   Only used to draw on the grid
 def pixel_click(coordinates):
     for _ in range(3):
         mousemovements.move(coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2))
@@ -66,23 +72,25 @@ def pixel_click(coordinates):
     
 
 sleeptime = 0.1
+# Select the given color
 def pick_color(color):
+    # Ensure that the color picker menu is opened
     while True:
-        click_to(color_button)
+        move_to(color_button)
         mousemovements.click()
         time.sleep(sleeptime)
         if not is_color_menu_closed():
             break
  
+    # Ensure the right color is selected
     while True:
+        # If the color picker menu is not opened, call the function recursively
         if is_color_menu_closed():
             pick_color(color)
             return
-        click_to(color_input)
-        #click_to(color_input)
+        move_to(color_input)
         mousemovements.click()
         time.sleep(sleeptime)
-        #mouse.double_click()
         clipboard.copy(rgb_to_hex(color))
         keyboard.send("ctrl+v")
         time.sleep(0.1)
@@ -92,8 +100,9 @@ def pick_color(color):
         if is_right_color_selected(color):
             break
 
+    # Ensure that the color picked menu is closed
     while True:
-        click_to(close_color)
+        move_to(close_color)
         time.sleep(sleeptime)
         mousemovements.click()
         time.sleep(sleeptime)
@@ -101,6 +110,8 @@ def pick_color(color):
             break
 
     
+# Return unique colors in color matrix
+#   Used to reduce the number of times we open the color picked menu
 def get_unique_colors(matrix):
     unique_colors = []
 
@@ -113,8 +124,8 @@ def get_unique_colors(matrix):
     return unique_colors
 
 
-def main():
-    matrix = getmatrix.get_matrix("images/grape.png")
+def main(image_path):
+    matrix = getmatrix.get_matrix(image_path)
     unique_colors = get_unique_colors(matrix)
 
     time.sleep(2)
@@ -131,4 +142,4 @@ def main():
                     pixel_click(coord)
 
 if __name__ == "__main__":
-    main()
+    main("images/grape.png")

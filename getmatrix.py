@@ -6,7 +6,9 @@ def pretty_print(matrix):
         print(line)
     print("]")
 
+# Get color matrix of image
 def get_matrix(image_path):
+    # Open image and get sequence of pixels
     im = Image.open(image_path)
     width, _ = im.size
     pixels = list(im.getdata())
@@ -16,14 +18,17 @@ def get_matrix(image_path):
     linecount = 0
 
     is_alpha = None
-    for i in pixels:
-        k = (i[0], i[1], i[2])
+    for pixel in pixels:
+        current_color = (pixel[0], pixel[1], pixel[2])
+        # If we did not already check that the pixels have an alpha value, do it
         if is_alpha is None:
-            is_alpha = len(i) == 4
-        if is_alpha and i[3] == 0:
+            is_alpha = len(pixel) == 4
+        # If the image has transparency, check fully transparent pixels
+        if is_alpha and pixel[3] == 0:
             line.append("void")
         else:
-            line.append(k)
+            line.append(current_color)
+
         linecount += 1
         if linecount == width:
             resulting_matrix.append(line)
