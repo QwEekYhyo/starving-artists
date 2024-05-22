@@ -1,12 +1,11 @@
 import keyboard
-import mouse
-import mousemovements
-import getmatrix
 import time
 import clipboard
-import virtualkeystroke as vks
 from PIL import ImageGrab
 import random
+
+import mousemovements
+import getmatrix
 
 matrix = getmatrix.get_matrix("images/skin.png")
 top_left = (654, 168)
@@ -24,7 +23,7 @@ delta_height = height / 32
 close_button_color = (109, 42, 40)
 
 def rgb_to_hex(rgb):
-    temp = [0, 0, 0]
+    temp = ["", "", ""]
     for i in range(3):
         temp[i] = hex(rgb[i])[2:]
 
@@ -105,13 +104,6 @@ for i in range(len(matrix)):
 
 # main
 time.sleep(4)
-'''
-for i in range(32):
-    pick_color((255, 0, 7 * i))
-    pixel_click((((i * delta_width) + middle_tl[0], middle_tl[1])))
-
-
-'''
 current_selection = None
 for color in unique_colors:
     for i in range(len(matrix)):
