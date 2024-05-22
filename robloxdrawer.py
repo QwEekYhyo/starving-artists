@@ -57,12 +57,12 @@ def pixel_click(coordinates):
 
 # Select the given color
 def pick_color(color):
-    sleeptime = 0.1
+    sleep_time = 0.1
     # Ensure that the color picker menu is opened
     while True:
         move_to(color_button)
         mousemovements.click()
-        time.sleep(sleeptime)
+        time.sleep(sleep_time)
         if not is_color_menu_closed():
             break
  
@@ -74,12 +74,12 @@ def pick_color(color):
             return
         move_to(color_input)
         mousemovements.click()
-        time.sleep(sleeptime)
+        time.sleep(sleep_time)
         clipboard.copy(utils.rgb_to_hex(color))
         keyboard.send("ctrl+v")
         time.sleep(0.1)
         keyboard.press_and_release("enter")
-        time.sleep(sleeptime)
+        time.sleep(sleep_time)
 
         if is_right_color_selected(color):
             break
@@ -87,9 +87,9 @@ def pick_color(color):
     # Ensure that the color picked menu is closed
     while True:
         move_to(close_color)
-        time.sleep(sleeptime)
+        time.sleep(sleep_time)
         mousemovements.click()
-        time.sleep(sleeptime)
+        time.sleep(sleep_time)
         if is_color_menu_closed():
             break
 
