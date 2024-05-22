@@ -1,3 +1,5 @@
+import time
+
 def rgb_to_hex(rgb):
     # Store hex values of red, green and blue
     temp = ["", "", ""]
@@ -14,6 +16,11 @@ def rgb_to_hex(rgb):
             result += v
             
     return result
+
+def time_function(function):
+    start = time.time()
+    function()
+    return time.time() - start
 
 if __name__ == "__main__":
     print(rgb_to_hex((255, 6, 27)))
