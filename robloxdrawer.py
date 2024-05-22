@@ -6,6 +6,7 @@ import random
 
 import mousemovements
 import colormatrix
+import utils
 
 ############# Global variables #############
 
@@ -25,24 +26,6 @@ delta_height = height / 32
 
 # Color of the close button
 close_button_color = (109, 42, 40)
-
-
-def rgb_to_hex(rgb):
-    # Store hex values of red, green and blue
-    temp = ["", "", ""]
-    for i in range(3):
-        temp[i] = hex(rgb[i])[2:]
-
-    # Concatenate the values and ensure they are of length two to match the
-    # format : ff00ff
-    result = ""
-    for v in temp:
-        if len(v) < 2:
-            result += "0" + v
-        elif len(v) == 2:
-            result += v
-            
-    return result
 
 
 # Take a screenshot and check that the selected color matches the given one
@@ -72,9 +55,9 @@ def pixel_click(coordinates):
         time.sleep(0.05)
     
 
-sleeptime = 0.1
 # Select the given color
 def pick_color(color):
+    sleeptime = 0.1
     # Ensure that the color picker menu is opened
     while True:
         move_to(color_button)
@@ -92,7 +75,7 @@ def pick_color(color):
         move_to(color_input)
         mousemovements.click()
         time.sleep(sleeptime)
-        clipboard.copy(rgb_to_hex(color))
+        clipboard.copy(utils.rgb_to_hex(color))
         keyboard.send("ctrl+v")
         time.sleep(0.1)
         keyboard.press_and_release("enter")
