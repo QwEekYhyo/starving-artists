@@ -1,10 +1,12 @@
 from PIL import Image
 
+
 def pretty_print(matrix):
     print("[")
     for line in matrix:
         print(line)
     print("]")
+
 
 # Get color matrix of image
 def get_matrix(image_path):
@@ -32,10 +34,11 @@ def get_matrix(image_path):
         linecount += 1
         if linecount == width:
             resulting_matrix.append(line)
-            line=[]
+            line = []
             linecount = 0
 
     return resulting_matrix
+
 
 # Return unique colors in color matrix
 #   Used to reduce the number of times we open the color picked menu

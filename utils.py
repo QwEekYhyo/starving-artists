@@ -12,8 +12,9 @@ def rgb_to_hex(rgb):
             result += "0" + v
         elif len(v) == 2:
             result += v
-            
+
     return result
+
 
 if __name__ == "__main__":
     print(rgb_to_hex((255, 6, 27)))
