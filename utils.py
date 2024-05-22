@@ -1,5 +1,6 @@
 import time
 
+
 def rgb_to_hex(rgb):
     # Store hex values of red, green and blue
     temp = ["", "", ""]
@@ -14,13 +15,15 @@ def rgb_to_hex(rgb):
             result += "0" + v
         elif len(v) == 2:
             result += v
-            
+
     return result
+
 
 def time_function(function):
     start = time.time()
     function()
     return time.time() - start
+
 
 def time_format(seconds):
     minutes = seconds // 60
@@ -36,6 +39,7 @@ def time_format(seconds):
         result += f"{minutes}min "
     result += f"{seconds}s"
     return result
+
 
 if __name__ == "__main__":
     print(rgb_to_hex((255, 6, 27)))

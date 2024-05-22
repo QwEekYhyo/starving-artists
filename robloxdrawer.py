@@ -41,8 +41,10 @@ def is_color_menu_closed():
 
 
 # Move the mouse to the given coordinates with a randomness of a few pixels
-def move_to(coordinates): 
-    mousemovements.move(coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2))
+def move_to(coordinates):
+    mousemovements.move(
+        coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2)
+    )
     time.sleep(0.1)
 
 
@@ -50,10 +52,12 @@ def move_to(coordinates):
 #   Only used to draw on the grid
 def pixel_click(coordinates):
     for _ in range(3):
-        mousemovements.move(coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2))
+        mousemovements.move(
+            coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2)
+        )
         mousemovements.click()
         time.sleep(0.05)
-    
+
 
 # Select the given color
 def pick_color(color):
@@ -65,7 +69,7 @@ def pick_color(color):
         time.sleep(sleep_time)
         if not is_color_menu_closed():
             break
- 
+
     # Ensure the right color is selected
     while True:
         # If the color picker menu is not opened, call the function recursively
@@ -93,7 +97,7 @@ def pick_color(color):
         if is_color_menu_closed():
             break
 
-    
+
 def main(image_path, starting_delay):
     matrix = colormatrix.get_matrix(image_path)
     unique_colors = colormatrix.get_unique_colors(matrix)
@@ -108,13 +112,16 @@ def main(image_path, starting_delay):
                     if current_selection != current:
                         current_selection = current
                         pick_color(current)
-                    coord = ((j * delta_width) + middle_tl[0], (i * delta_height) + middle_tl[1])
+                    coord = (
+                        (j * delta_width) + middle_tl[0],
+                        (i * delta_height) + middle_tl[1],
+                    )
                     pixel_click(coord)
+
 
 if __name__ == "__main__":
     delay = 2
     image_path = input("Which image would you like to draw ? ")
-    execution_time = utils.time_function(lambda
-                                         : main(image_path, delay))
+    execution_time = utils.time_function(lambda: main(image_path, delay))
     execution_time -= delay
     print(f"Took {utils.time_format(execution_time)} to draw {image_path}")
