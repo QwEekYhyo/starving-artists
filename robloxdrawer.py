@@ -94,11 +94,11 @@ def pick_color(color):
             break
 
     
-def main(image_path):
+def main(image_path, starting_delay):
     matrix = colormatrix.get_matrix(image_path)
     unique_colors = colormatrix.get_unique_colors(matrix)
 
-    time.sleep(2)
+    time.sleep(starting_delay)
     current_selection = None
     for color in unique_colors:
         for i in range(len(matrix)):
@@ -112,4 +112,9 @@ def main(image_path):
                     pixel_click(coord)
 
 if __name__ == "__main__":
-    main("images/grape.png")
+    delay = 2
+    image_path = input("Which image would you like to draw ? ")
+    execution_time = utils.time_function(lambda
+                                         : main(image_path, delay))
+    execution_time -= delay
+    print(f"Took {utils.time_format(execution_time)} to draw {image_path}")
