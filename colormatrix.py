@@ -9,7 +9,7 @@ def pretty_print(matrix):
 
 
 # Get color matrix of image
-def get_matrix(image_path):
+def get_matrix(image_path, quality_loss_factor=1):
     # Open image and get sequence of pixels
     im = Image.open(image_path)
     width, _ = im.size
@@ -22,6 +22,9 @@ def get_matrix(image_path):
     is_alpha = None
     for pixel in pixels:
         current_color = (pixel[0], pixel[1], pixel[2])
+        if quality_loss_factor != 1:
+            current_color = round_color(current_color, quality_loss_factor)
+
         # If we did not already check that the pixels have an alpha value, do it
         if is_alpha is None:
             is_alpha = len(pixel) == 4
@@ -54,7 +57,18 @@ def get_unique_colors(matrix):
     return unique_colors
 
 
+def round_color(color, factor):
+    return (
+        (color[0] // factor) * factor,
+        (color[1] // factor) * factor,
+        (color[2] // factor) * factor,
+    )
+
+
 if __name__ == "__main__":
     matrix = get_matrix("images/diamond.png")
     pretty_print(matrix)
     print(get_unique_colors(matrix))
+    color_to_round = (234, 7, 46)
+    print(color_to_round)
+    print(round_color(color_to_round, 20))

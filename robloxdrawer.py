@@ -99,7 +99,9 @@ def pick_color(color):
 
 
 def main(image_path, starting_delay):
-    matrix = colormatrix.get_matrix(image_path)
+    quality_loss_factor = int(input("Quality loss factor ? (1 = no quality loss)"))
+
+    matrix = colormatrix.get_matrix(image_path, quality_loss_factor)
     unique_colors = colormatrix.get_unique_colors(matrix)
 
     time.sleep(starting_delay)
@@ -120,8 +122,8 @@ def main(image_path, starting_delay):
 
 
 if __name__ == "__main__":
-    delay = 2
     image_path = input("Which image would you like to draw ? ")
+    delay = 2
     execution_time = utils.time_function(lambda: main(image_path, delay))
     execution_time -= delay
     print(f"Took {utils.time_format(execution_time)} to draw {image_path}")

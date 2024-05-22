@@ -1,4 +1,5 @@
-import utils, colormatrix
+import utils
+import colormatrix
 import turtle
 
 
@@ -34,10 +35,12 @@ def main(image_path):
     screen.colormode(255)
     texture = colormatrix.get_matrix(image_path)
     draw_texture(texture, -400, 400, 400, t)
+    texture = colormatrix.get_matrix(image_path, 20)
+    draw_texture(texture, 20, 400, 400, t)
     screen.update()
     screen.mainloop()
 
 
 if __name__ == "__main__":
-    time_taken = utils.time_function(lambda: main("images/diamond.png"))
+    time_taken = utils.time_function(lambda: main("images/thumbnail.png"))
     print(f"Execution took {time_taken} seconds")
