@@ -13,22 +13,21 @@ def get_matrix(image_path, quality_loss_factor=1):
     # Open image and get sequence of pixels
     im = Image.open(image_path)
     width, _ = im.size
+    if im.mode == "P" or im.mode == "L":
+        im = im.convert("RGB")
     pixels = list(im.getdata())
 
     resulting_matrix = []
     line = []
     linecount = 0
 
-    is_alpha = None
+    is_alpha = im.mode == "RGBA"
     for pixel in pixels:
         current_color = (pixel[0], pixel[1], pixel[2])
         if quality_loss_factor != 1:
             current_color = round_color(current_color, quality_loss_factor)
 
-        # If we did not already check that the pixels have an alpha value, do it
-        if is_alpha is None:
-            is_alpha = len(pixel) == 4
-        # If the image has transparency, check fully transparent pixels
+        # If the image has transparency, get rid of fully transparent pixels
         if is_alpha and pixel[3] == 0:
             line.append("void")
         else:
