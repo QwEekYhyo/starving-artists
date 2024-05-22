@@ -7,7 +7,9 @@ import random
 import mousemovements
 import getmatrix
 
-matrix = getmatrix.get_matrix("images/skin.png")
+############# Global variables #############
+
+# Position on screen of relevant buttons in game
 top_left = (654, 168)
 middle_tl = (662, 176)
 bottom_right = (1266, 780)
@@ -15,12 +17,15 @@ color_button = (1083, 829)
 color_input = (1080, 740)
 close_color = (1322, 458)
 
+# Size of cells to create the drawing grid
 width = bottom_right[0] - top_left[0]
 height = bottom_right[1] - top_left[1]
 delta_width = width / 32
 delta_height = height / 32
 
+# Color of the close button
 close_button_color = (109, 42, 40)
+
 
 def rgb_to_hex(rgb):
     temp = ["", "", ""]
@@ -36,18 +41,22 @@ def rgb_to_hex(rgb):
             
     return result
 
+
 def is_right_color_selected(color):
     screenshot = ImageGrab.grab()
     return screenshot.getpixel(color_button) == color
+
 
 def is_color_menu_closed():
     screenshot = ImageGrab.grab()
     is_closed = screenshot.getpixel(close_color) != close_button_color
     return is_closed
 
+
 def click_to(coordinates): 
     mousemovements.move(coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2))
     time.sleep(0.1)
+
 
 def pixel_click(coordinates):
     for _ in range(3):
@@ -92,27 +101,34 @@ def pick_color(color):
             break
 
     
-# get unique colors
-unique_colors = []
+def get_unique_colors(matrix):
+    unique_colors = []
 
-for i in range(len(matrix)):
-    for j in range(len(matrix[i])):
-        current_color = matrix[i][j]
-        if current_color != "void" and current_color not in unique_colors:
-            unique_colors.append(current_color)
-#
-
-# main
-time.sleep(4)
-current_selection = None
-for color in unique_colors:
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
-            current = matrix[i][j]
-            if current == color:
-                if current_selection != current:
-                    current_selection = current
-                    pick_color(current)
-                coord = ((j * delta_width) + middle_tl[0], (i * delta_height) + middle_tl[1])
-                pixel_click(coord)
+            current_color = matrix[i][j]
+            if current_color != "void" and current_color not in unique_colors:
+                unique_colors.append(current_color)
 
+    return unique_colors
+
+
+def main():
+    matrix = getmatrix.get_matrix("images/grape.png")
+    unique_colors = get_unique_colors(matrix)
+
+    time.sleep(2)
+    current_selection = None
+    for color in unique_colors:
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                current = matrix[i][j]
+                if current == color:
+                    if current_selection != current:
+                        current_selection = current
+                        pick_color(current)
+                    coord = ((j * delta_width) + middle_tl[0], (i * delta_height) + middle_tl[1])
+                    pixel_click(coord)
+
+if __name__ == "__main__":
+    main()
