@@ -1,4 +1,4 @@
-import turtle, getmatrix
+import turtle, colormatrix
 
 def square(length, x, y, color, t):
     t.up()
@@ -26,7 +26,7 @@ def main():
     screen = turtle.Screen()
     screen.tracer(0)
     screen.colormode(255)
-    texture = getmatrix.get_matrix("images/grape.png")
+    texture = colormatrix.get_matrix("images/grape.png")
     draw_texture(texture, -400, 400, 400, t)
     screen.update()
     screen.mainloop()

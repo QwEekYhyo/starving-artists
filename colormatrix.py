@@ -37,5 +37,21 @@ def get_matrix(image_path):
 
     return resulting_matrix
 
+# Return unique colors in color matrix
+#   Used to reduce the number of times we open the color picked menu
+def get_unique_colors(matrix):
+    unique_colors = set()
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            current_color = matrix[i][j]
+            if current_color != "void" and current_color not in unique_colors:
+                unique_colors.add(current_color)
+
+    return unique_colors
+
+
 if __name__ == "__main__":
-    pretty_print(get_matrix("images/diamond.png"))
+    matrix = get_matrix("images/diamond.png")
+    pretty_print(matrix)
+    print(get_unique_colors(matrix))

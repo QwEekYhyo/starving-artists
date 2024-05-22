@@ -5,7 +5,7 @@ from PIL import ImageGrab
 import random
 
 import mousemovements
-import getmatrix
+import colormatrix
 
 ############# Global variables #############
 
@@ -55,6 +55,7 @@ def is_right_color_selected(color):
 def is_color_menu_closed():
     screenshot = ImageGrab.grab()
     return screenshot.getpixel(close_color) != close_button_color
+
 
 # Move the mouse to the given coordinates with a randomness of a few pixels
 def move_to(coordinates): 
@@ -110,23 +111,9 @@ def pick_color(color):
             break
 
     
-# Return unique colors in color matrix
-#   Used to reduce the number of times we open the color picked menu
-def get_unique_colors(matrix):
-    unique_colors = []
-
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            current_color = matrix[i][j]
-            if current_color != "void" and current_color not in unique_colors:
-                unique_colors.append(current_color)
-
-    return unique_colors
-
-
 def main(image_path):
-    matrix = getmatrix.get_matrix(image_path)
-    unique_colors = get_unique_colors(matrix)
+    matrix = colormatrix.get_matrix(image_path)
+    unique_colors = colormatrix.get_unique_colors(matrix)
 
     time.sleep(2)
     current_selection = None
