@@ -22,5 +22,21 @@ def time_function(function):
     function()
     return time.time() - start
 
+def time_format(seconds):
+    minutes = seconds // 60
+    seconds = seconds % 60
+
+    hours = minutes // 60
+    minutes = minutes % 60
+
+    result = ""
+    if hours > 0:
+        result += f"{hours}h "
+    if minutes > 0:
+        result += f"{minutes}min "
+    result += f"{seconds}s"
+    return result
+
 if __name__ == "__main__":
     print(rgb_to_hex((255, 6, 27)))
+    print(time_format(7969))
