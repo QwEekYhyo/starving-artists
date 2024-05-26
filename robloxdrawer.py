@@ -56,14 +56,17 @@ def pixel_click(coordinates):
             coordinates[0] + random.randint(0, 2), coordinates[1] + random.randint(0, 2)
         )
         mousemovements.click()
-        time.sleep(0.02)
+        time.sleep(0.03)
 
 
 # Select the given color
 def pick_color(color):
     sleep_time = 0.05
     # Ensure that the color picker menu is opened
+    time.sleep(0.1)
     while True:
+        if not is_color_menu_closed():
+            break
         move_to(color_button)
         mousemovements.click()
         time.sleep(0.2)

@@ -14,7 +14,7 @@ def get_matrix(image_path, quality_loss_factor=1):
     im = Image.open(image_path)
     width, _ = im.size
     if im.mode == "P" or im.mode == "L":
-        im = im.convert("RGB")
+        im = im.convert("RGBA")
     pixels = list(im.getdata())
 
     resulting_matrix = []
